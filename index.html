@@ -1,0 +1,1514 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrueSight - Advanced Watermarking & Deepfake Detection System</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --primary-dark: #4f46e5;
+      --secondary: #8b5cf6;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --error: #ef4444;
+      --warning: #f59e0b;
+      --bg-primary: #0a0e27;
+      --bg-secondary: #111827;
+      --bg-card: #1e293b;
+      --bg-elevated: #1f2937;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --border-light: rgba(148, 163, 184, 0.15);
+      --glass-bg: rgba(30, 41, 59, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.3);
+      --shadow-xl: 0 30px 80px rgba(0, 0, 0, 0.4);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      min-height: 100vh;
+      color: var(--text-primary);
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Enhanced Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 15% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+      animation: backgroundShift 20s ease-in-out infinite alternate;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(180deg, 
+          rgba(10, 14, 39, 0) 0%, 
+          rgba(10, 14, 39, 0.3) 50%,
+          rgba(10, 14, 39, 0.6) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes backgroundShift {
+      0% { transform: scale(1) rotate(0deg); }
+      100% { transform: scale(1.1) rotate(5deg); }
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Enhanced Header */
+    header {
+      text-align: center;
+      margin-bottom: 80px;
+      animation: fadeInDown 1s ease-out;
+      position: relative;
+    }
+
+    .logo-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      font-size: 5.5em;
+      filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.6))
+              drop-shadow(0 0 60px rgba(99, 102, 241, 0.3));
+      animation: float 4s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+      animation: pulse 3s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      25% { transform: translateY(-8px) rotate(2deg); }
+      75% { transform: translateY(-12px) rotate(-2deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    h1 {
+      font-size: 4em;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #c7d2fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+      letter-spacing: -3px;
+      line-height: 1.1;
+      text-shadow: 0 0 80px rgba(99, 102, 241, 0.5);
+    }
+
+    .subtitle {
+      font-size: 1.4em;
+      color: var(--text-secondary);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .badge-container {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 0.95em;
+      font-weight: 600;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .badge:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .badge.success {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .badge.info {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    /* Enhanced Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-radius: 32px;
+      padding: 44px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--glass-border);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: fadeInUp 0.8s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, 
+        rgba(99, 102, 241, 0.08) 0%, 
+        rgba(139, 92, 246, 0.05) 50%,
+        rgba(6, 182, 212, 0.08) 100%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: all 0.8s ease;
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-12px);
+      box-shadow: 
+        var(--shadow-xl),
+        0 0 100px rgba(99, 102, 241, 0.2),
+        inset 0 0 60px rgba(99, 102, 241, 0.05);
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+      top: -25%;
+      left: -25%;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--border-light);
+      position: relative;
+    }
+
+    .card-icon {
+      font-size: 3em;
+      filter: drop-shadow(0 4px 20px rgba(99, 102, 241, 0.4));
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    h2 {
+      color: var(--text-primary);
+      font-size: 2em;
+      font-weight: 800;
+      letter-spacing: -1px;
+      flex: 1;
+    }
+
+    .card-description {
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.7;
+      font-size: 1em;
+      font-weight: 400;
+    }
+
+    /* Enhanced Form Elements */
+    .input-group {
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 0.98em;
+      letter-spacing: 0.2px;
+    }
+
+    .label-icon {
+      font-size: 1.3em;
+      filter: drop-shadow(0 2px 8px rgba(99, 102, 241, 0.3));
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 24px;
+      border: 2px dashed var(--border);
+      border-radius: 20px;
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 0.98em;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+    }
+
+    input[type="file"]::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    input[type="file"]:hover {
+      background: var(--bg-card);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.2),
+        0 0 40px rgba(99, 102, 241, 0.15);
+    }
+
+    input[type="file"]:hover::before {
+      opacity: 1;
+    }
+
+    input[type="file"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 
+        0 0 0 4px rgba(99, 102, 241, 0.15),
+        0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    textarea, select, input[type="number"] {
+      width: 100%;
+      padding: 16px 18px;
+      border: 2px solid var(--border-light);
+      border-radius: 16px;
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-size: 0.96em;
+      resize: vertical;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 100px;
+    }
+
+    textarea {
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 0.88em;
+      line-height: 1.6;
+    }
+
+    select, input[type="number"] {
+      font-family: 'Inter', sans-serif;
+      min-height: auto;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    textarea:focus, select:focus, input[type="number"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 
+        0 0 0 4px rgba(99, 102, 241, 0.15),
+        0 4px 16px rgba(0, 0, 0, 0.2);
+      background: var(--bg-card);
+    }
+
+    textarea::placeholder {
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    /* Enhanced Buttons */
+    button {
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 1.05em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 12px 32px rgba(99, 102, 241, 0.3),
+        0 0 0 0 rgba(99, 102, 241, 0.5);
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent);
+      transition: left 0.7s ease;
+    }
+
+    button:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    button:hover::after {
+      left: 100%;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 16px 48px rgba(99, 102, 241, 0.4),
+        0 0 60px rgba(99, 102, 241, 0.3);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      opacity: 0.7;
+    }
+
+    .btn-text {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    /* Enhanced Results */
+    .result {
+      margin-top: 28px;
+      padding: 24px;
+      border-radius: 16px;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 0.92em;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      display: none;
+      animation: slideInUp 0.5s ease;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .result::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 5px;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result.success {
+      background: rgba(16, 185, 129, 0.12);
+      border: 2px solid rgba(16, 185, 129, 0.4);
+      color: #d1fae5;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
+    }
+
+    .result.success::before {
+      background: linear-gradient(180deg, var(--success) 0%, transparent 100%);
+    }
+
+    .result.error {
+      background: rgba(239, 68, 68, 0.12);
+      border: 2px solid rgba(239, 68, 68, 0.4);
+      color: #fecaca;
+      box-shadow: 0 8px 24px rgba(239, 68, 68, 0.15);
+    }
+
+    .result.error::before {
+      background: linear-gradient(180deg, var(--error) 0%, transparent 100%);
+    }
+
+    .result.info {
+      background: rgba(99, 102, 241, 0.12);
+      border: 2px solid rgba(99, 102, 241, 0.4);
+      color: #e0e7ff;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+    }
+
+    .result.info::before {
+      background: linear-gradient(180deg, var(--primary) 0%, transparent 100%);
+    }
+
+    /* Enhanced Key Display */
+    .key-display {
+      background: var(--bg-elevated);
+      padding: 24px;
+      border-radius: 16px;
+      border: 2px solid var(--border-light);
+      margin-top: 20px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .key-display::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .key-display:hover {
+      border-color: var(--primary);
+      box-shadow: 0 8px 32px rgba(99, 102, 241, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .key-display:hover::before {
+      opacity: 1;
+    }
+
+    .key-label {
+      font-weight: 700;
+      color: var(--primary-light);
+      margin-bottom: 12px;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.3px;
+    }
+
+    .key-value {
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 0.85em;
+      word-break: break-all;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      padding: 14px 16px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+    }
+
+    /* Enhanced Notes */
+    .note {
+      background: rgba(245, 158, 11, 0.1);
+      border-left: 5px solid var(--warning);
+      padding: 20px 24px;
+      margin-top: 28px;
+      border-radius: 12px;
+      font-size: 0.94em;
+      color: #fef3c7;
+      line-height: 1.7;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-left: 5px solid var(--warning);
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.1);
+    }
+
+    .note strong {
+      color: var(--warning);
+      font-weight: 700;
+    }
+
+    /* Enhanced Spinner */
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+      margin-right: 12px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Copy Button Styles */
+    .copy-btn {
+      width: auto !important;
+      padding: 10px 20px !important;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+      font-size: 0.88em !important;
+      margin-top: 12px;
+      letter-spacing: 1px;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Heatmap Display */
+    #heatmap_display {
+      margin-top: 24px;
+      padding: 24px;
+      background: var(--bg-elevated);
+      border-radius: 16px;
+      border: 2px solid var(--border-light);
+    }
+
+    #heatmap_image {
+      width: 100%;
+      border-radius: 12px;
+      border: 2px solid var(--primary);
+      max-height: 550px;
+      object-fit: contain;
+      box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+    }
+
+    /* Enhanced Footer */
+    footer {
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--text-muted);
+      font-size: 0.96em;
+      border-top: 1px solid var(--border-light);
+      margin-top: 60px;
+      backdrop-filter: blur(10px);
+    }
+
+    footer strong {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 32px 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.8em;
+        letter-spacing: -2px;
+      }
+
+      .logo {
+        font-size: 4em;
+      }
+
+      .subtitle {
+        font-size: 1.2em;
+      }
+
+      .card {
+        padding: 32px 24px;
+      }
+
+      .card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+      }
+
+      .badge-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .badge {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2.2em;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      button {
+        padding: 18px;
+        font-size: 0.96em;
+      }
+    }
+
+    /* Accessibility improvements */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Focus visible for accessibility */
+    :focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 4px;
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Selection colors */
+    ::selection {
+      background: rgba(99, 102, 241, 0.3);
+      color: var(--text-primary);
+    }
+
+    ::-moz-selection {
+      background: rgba(99, 102, 241, 0.3);
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">
+        <div class="logo-glow"></div>
+        <div class="logo">🔐</div>
+      </div>
+      <h1>TrueSight</h1>
+      <p class="subtitle">Advanced Cryptographic Watermarking, Verification & AI-Powered Deepfake Detection System</p>
+      <div class="badge-container">
+        <div class="badge info">
+          🎓 MIT Manipal Academic Project
+        </div>
+        <div class="badge success">
+          🌐 Cloud AI Detection Active • 90-95% Accuracy
+        </div>
+      </div>
+    </header>
+
+    <div class="card-grid">
+      <!-- Generate Keypair Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">🔑</span>
+          <h2>Generate Keypair</h2>
+        </div>
+        <p class="card-description">
+          Generate a new Ed25519 cryptographic keypair. Your private key signs media, while the public key allows anyone to verify authenticity.
+        </p>
+        <button id="gen">
+          <span class="btn-text">Generate New Keypair</span>
+        </button>
+        <div id="keys" class="result"></div>
+      </div>
+
+      <!-- Watermark Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">✏️</span>
+          <h2>Watermark Media</h2>
+        </div>
+        <p class="card-description">
+          Embed an invisible cryptographic signature into your image or video. The watermark proves authenticity and detects tampering.
+        </p>
+        
+        <div class="input-group">
+          <label for="mediaType">
+            <span class="label-icon">🎬</span>
+            Media Type
+          </label>
+          <select id="mediaType" onchange="toggleMediaOptions()">
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+          </select>
+        </div>
+        
+        <div class="input-group">
+          <label for="wm_file" id="fileLabel">
+            <span class="label-icon">📁</span>
+            Select Image to Watermark
+          </label>
+          <input type="file" id="wm_file" accept="image/*"/>
+        </div>
+        
+        <div id="videoOptions" style="display: none;">
+          <div class="input-group">
+            <label for="frameStride">
+              <span class="label-icon">🎞️</span>
+              Frame Stride (watermark every Nth frame)
+            </label>
+            <input type="number" id="frameStride" value="10" min="1" max="50">
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <label for="priv">
+            <span class="label-icon">🔒</span>
+            Private Key (hex) - Required 
+          </label>
+          <textarea id="priv" rows="3" placeholder="Enter your private key or generate a new keypair"></textarea>
+        </div>
+        
+        <button id="wm_submit">
+          <span class="btn-text">Watermark & Download</span>
+        </button>
+        <div id="wm_result" class="result"></div>
+        
+        <div class="note">
+          <strong>💡 Note:</strong> The watermark embeds a 512-bit Ed25519 signature using DWT-QIM. Save your keys securely for future verification!
+        </div>
+      </div>
+
+      <!-- Verify Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">✅</span>
+          <h2>Verify Watermark</h2>
+        </div>
+        <p class="card-description">
+          Extract and verify the cryptographic watermark from an image or video. Requires the watermarked media, original media, and public key.
+        </p>
+        
+        <div class="input-group">
+          <label for="verifyMediaType">
+            <span class="label-icon">🎬</span>
+            Media Type
+          </label>
+          <select id="verifyMediaType" onchange="toggleVerifyOptions()">
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+          </select>
+        </div>
+        
+        <div class="input-group">
+          <label for="ver_file" id="verifyFileLabel">
+            <span class="label-icon">🖼️</span>
+            Watermarked Image
+          </label>
+          <input type="file" id="ver_file" accept="image/*"/>
+        </div>
+        
+        <div class="input-group">
+          <label for="original_file" id="originalFileLabel">
+            <span class="label-icon">📷</span>
+            Original Image (for verification)
+          </label>
+          <input type="file" id="original_file" accept="image/*"/>
+        </div>
+        
+        <div id="verifyVideoOptions" style="display: none;">
+          <div class="input-group">
+            <label for="framesToCheck">
+              <span class="label-icon">🔍</span>
+              Frames to Check
+            </label>
+            <input type="number" id="framesToCheck" value="5" min="1" max="20">
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <label for="pub">
+            <span class="label-icon">🔓</span>
+            Public Key (hex)
+          </label>
+          <textarea id="pub" rows="3" placeholder="Paste the public key here..."></textarea>
+        </div>
+        
+        <button id="ver_submit">
+          <span class="btn-text">Verify Watermark</span>
+        </button>
+        <div id="ver_result" class="result"></div>
+        
+        <div class="note">
+          <strong>⚠️ Important:</strong> Both the watermarked AND original media are required because the signature was computed from the original image bytes.
+        </div>
+      </div>
+
+      <!-- Deepfake Detection Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">🔍</span>
+          <h2>Deepfake Detection</h2>
+        </div>
+        <p class="card-description">
+          Detect deepfake images and videos using cloud-based AI (Sightengine API). Achieves 90-95% accuracy with real-time analysis and highlighted suspicious regions.
+        </p>
+        
+        <div class="input-group">
+          <label for="detectMediaType">
+            <span class="label-icon">🎬</span>
+            Media Type
+          </label>
+          <select id="detectMediaType" onchange="toggleDetectOptions()">
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+          </select>
+        </div>
+        
+        <div class="input-group">
+          <label for="detect_file" id="detectFileLabel">
+            <span class="label-icon">📁</span>
+            Select Image to Analyze
+          </label>
+          <input type="file" id="detect_file" accept="image/*"/>
+        </div>
+        
+        <div id="detectVideoOptions" style="display: none;">
+          <div class="input-group">
+            <label for="detectFramesToCheck">
+              <span class="label-icon">🎞️</span>
+              Frames to Analyze
+            </label>
+            <input type="number" id="detectFramesToCheck" value="10" min="1" max="50">
+          </div>
+        </div>
+        
+        <button id="detect_submit">
+          <span class="btn-text">Detect Deepfake</span>
+        </button>
+        <div id="detect_result" class="result"></div>
+        
+        <div id="heatmap_display" style="display: none;">
+          <label style="color: var(--text-primary); font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; font-size: 1.05em;">
+            <span class="label-icon">🔥</span>
+            Analysis Visualization
+          </label>
+          <img id="heatmap_image" alt="Deepfake detection heatmap visualization" />
+        </div>
+        
+        <div class="note">
+          <strong>🔬 Detection Method:</strong> Uses Sightengine Cloud API (90-95% accuracy) for primary detection with local fallback. Analyzes facial features, artifacts, and AI-generation patterns. Free tier: 500 detections/day.
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Built with precision by <strong>Aanyaa Agarwwal, Bhavya & Mayurika Sathish</strong><br>
+      Computer and Communication Engineering | MIT Manipal | 2025
+    </footer>
+  </div>
+
+<script>
+// Media type toggle functions
+function toggleMediaOptions() {
+  const mediaType = document.getElementById('mediaType').value;
+  const fileLabel = document.getElementById('fileLabel');
+  const fileInput = document.getElementById('wm_file');
+  const videoOptions = document.getElementById('videoOptions');
+
+  if (mediaType === 'image') {
+    fileLabel.innerHTML = '<span class="label-icon">📁</span>Select Image to Watermark';
+    fileInput.accept = '.png,.jpg,.jpeg,.bmp,.tiff,.webp';
+    videoOptions.style.display = 'none';
+  } else {
+    fileLabel.innerHTML = '<span class="label-icon">🎬</span>Select Video to Watermark';
+    fileInput.accept = '.mp4,.avi,.mov,.mkv,.webm,.flv';
+    videoOptions.style.display = 'block';
+  }
+}
+
+function toggleVerifyOptions() {
+  const mediaType = document.getElementById('verifyMediaType').value;
+  const verifyFileLabel = document.getElementById('verifyFileLabel');
+  const verifyFileInput = document.getElementById('ver_file');
+  const originalFileLabel = document.getElementById('originalFileLabel');
+  const originalFileInput = document.getElementById('original_file');
+  const verifyVideoOptions = document.getElementById('verifyVideoOptions');
+
+  if (mediaType === 'image') {
+    verifyFileLabel.innerHTML = '<span class="label-icon">🖼️</span>Watermarked Image';
+    verifyFileInput.accept = '.png,.jpg,.jpeg,.bmp,.tiff,.webp';
+    originalFileLabel.innerHTML = '<span class="label-icon">📷</span>Original Image (for verification)';
+    originalFileInput.accept = '.png,.jpg,.jpeg,.bmp,.tiff,.webp';
+    verifyVideoOptions.style.display = 'none';
+  } else {
+    verifyFileLabel.innerHTML = '<span class="label-icon">🎬</span>Watermarked Video';
+    verifyFileInput.accept = '.mp4,.avi,.mov,.mkv,.webm,.flv';
+    originalFileLabel.innerHTML = '<span class="label-icon">🎬</span>Original Video (for verification)';
+    originalFileInput.accept = '.mp4,.avi,.mov,.mkv,.webm,.flv';
+    verifyVideoOptions.style.display = 'block';
+  }
+}
+
+function toggleDetectOptions() {
+  const mediaType = document.getElementById('detectMediaType').value;
+  const detectFileLabel = document.getElementById('detectFileLabel');
+  const detectFileInput = document.getElementById('detect_file');
+  const detectVideoOptions = document.getElementById('detectVideoOptions');
+
+  if (mediaType === 'image') {
+    detectFileLabel.innerHTML = '<span class="label-icon">📁</span>Select Image to Analyze';
+    detectFileInput.accept = '.png,.jpg,.jpeg,.bmp,.tiff,.webp';
+    detectVideoOptions.style.display = 'none';
+  } else {
+    detectFileLabel.innerHTML = '<span class="label-icon">🎬</span>Select Video to Analyze';
+    detectFileInput.accept = '.mp4,.avi,.mov,.mkv,.webm,.flv';
+    detectVideoOptions.style.display = 'block';
+  }
+}
+
+// Utility functions
+function copyToClipboard(text) {
+  const button = event.target;
+  const originalText = button.textContent;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    button.textContent = '✅ Copied!';
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 2000);
+  }).catch(err => {
+    console.error('Failed to copy: ', err);
+    button.textContent = '❌ Failed';
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 2000);
+  });
+}
+
+function showResult(elementId, message, type = 'info') {
+  const el = document.getElementById(elementId);
+  el.textContent = message;
+  el.className = `result show ${type}`;
+}
+
+function setButtonLoading(buttonId, loading) {
+  const btn = document.getElementById(buttonId);
+  const textSpan = btn.querySelector('.btn-text');
+  if (loading) {
+    btn.disabled = true;
+    const originalText = textSpan.textContent;
+    textSpan.innerHTML = '<span class="spinner"></span>Processing...';
+    btn.dataset.originalText = originalText;
+  } else {
+    btn.disabled = false;
+    textSpan.textContent = btn.dataset.originalText || textSpan.textContent.replace('Processing...', '');
+  }
+}
+
+// Generate Keypair
+document.getElementById('gen').onclick = async () => {
+  const btn = document.getElementById('gen');
+  btn.dataset.originalText = 'Generate New Keypair';
+  setButtonLoading('gen', true);
+  
+  try {
+    const r = await fetch('/keys/new');
+    if (!r.ok) throw new Error('Failed to generate keys');
+    
+    const j = await r.json();
+    
+    const keysDisplay = document.getElementById('keys');
+    keysDisplay.innerHTML = `
+      <div class="key-display">
+        <div class="key-label">🔒 Private Key (Keep Secret!)</div>
+        <div class="key-value">${j.private_key_hex}</div>
+        <button onclick="copyToClipboard('${j.private_key_hex}')" class="copy-btn">
+          📋 Copy Private Key
+        </button>
+      </div>
+      <div class="key-display">
+        <div class="key-label">🔓 Public Key (Share Freely)</div>
+        <div class="key-value">${j.public_key_hex}</div>
+        <button onclick="copyToClipboard('${j.public_key_hex}')" class="copy-btn">
+          📋 Copy Public Key
+        </button>
+      </div>
+      <div class="note" style="margin-top: 20px;">
+        <strong>💡 Important:</strong> Save your private key securely - you'll need it for future watermarking!
+      </div>
+    `;
+    keysDisplay.className = 'result show success';
+    
+    document.getElementById('priv').value = j.private_key_hex;
+    document.getElementById('pub').value = j.public_key_hex;
+  } catch (e) {
+    showResult('keys', '❌ Error generating keys: ' + e.message, 'error');
+  } finally {
+    setButtonLoading('gen', false);
+  }
+}
+
+// Watermark File
+document.getElementById('wm_submit').onclick = async () => {
+  const mediaType = document.getElementById('mediaType').value;
+  const fileInput = document.getElementById('wm_file');
+  const f = fileInput.files[0];
+  const privKey = document.getElementById('priv').value.trim();
+
+  if (!f) {
+    showResult('wm_result', `⚠️ Please select a ${mediaType} file first`, 'error');
+    return;
+  }
+
+  if (!privKey) {
+    showResult('wm_result', 
+      `⚠️ Private Key Required\n\nYou need a private key to watermark media.\n\nEither:\n• Enter your existing private key above, or\n• Generate a new keypair`, 
+      'error'
+    );
+    return;
+  }
+
+  const btn = document.getElementById('wm_submit');
+  btn.dataset.originalText = 'Watermark & Download';
+  setButtonLoading('wm_submit', true);
+  
+  try {
+    const form = new FormData();
+    form.append('file', f);
+    form.append('private_key_hex', privKey);
+
+    let endpoint;
+    if (mediaType === 'image') {
+      endpoint = '/watermark/image';
+    } else {
+      endpoint = '/watermark/video';
+      const frameStride = document.getElementById('frameStride').value;
+      form.append('frame_stride', frameStride);
+    }
+
+    const r = await fetch(endpoint, { method: 'POST', body: form });
+
+    if (r.ok) {
+      const blob = await r.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      const extension = mediaType === 'image' ? '.png' : '.mp4';
+      a.download = `watermarked_${f.name.replace(/\.[^/.]+$/, '')}${extension}`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      let resultMsg = `✅ Success! Watermarked ${mediaType} downloaded.\n\n`;
+      resultMsg += `🔒 The ${mediaType} has been cryptographically signed.\n`;
+      resultMsg += `🔍 Use the verification tool to check authenticity.\n\n`;
+      resultMsg += `⚠️ Save your private key for future verifications.`;
+      
+      showResult('wm_result', resultMsg, 'success');
+    } else {
+      const err = await r.text();
+      showResult('wm_result', '❌ Error: ' + err, 'error');
+    }
+  } catch (e) {
+    showResult('wm_result', '❌ Network error: ' + e.message, 'error');
+  } finally {
+    setButtonLoading('wm_submit', false);
+  }
+}
+
+// Verify File
+document.getElementById('ver_submit').onclick = async () => {
+  const mediaType = document.getElementById('verifyMediaType').value;
+  const watermarkedFile = document.getElementById('ver_file').files[0];
+  const originalFile = document.getElementById('original_file').files[0];
+  const pub = document.getElementById('pub').value.trim();
+  
+  if (!watermarkedFile) {
+    showResult('ver_result', `⚠️ Please select a watermarked ${mediaType}`, 'error');
+    return;
+  }
+  
+  if (!originalFile) {
+    showResult('ver_result', `⚠️ Please select the original ${mediaType} for verification`, 'error');
+    return;
+  }
+  
+  if (!pub) {
+    showResult('ver_result', '⚠️ Please enter the public key', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('ver_submit');
+  btn.dataset.originalText = 'Verify Watermark';
+  setButtonLoading('ver_submit', true);
+  
+  try {
+    const form = new FormData();
+    form.append('file', watermarkedFile);
+    form.append('original_file', originalFile);
+    form.append('public_key_hex', pub);
+    
+    let endpoint;
+    if (mediaType === 'image') {
+      endpoint = '/verify/image';
+    } else {
+      endpoint = '/verify/video';
+      const framesToCheck = document.getElementById('framesToCheck').value;
+      form.append('frames_to_check', framesToCheck);
+    }
+    
+    const r = await fetch(endpoint, { method: 'POST', body: form });
+    const j = await r.json();
+    
+    if (r.ok) {
+      let resultMsg = '';
+      if (j.verified) {
+        resultMsg = `✅ ${mediaType.toUpperCase()} VERIFICATION SUCCESSFUL!\n\n`;
+        resultMsg += 'The cryptographic signature is valid and matches the original media.\n\n';
+        resultMsg += '✓ Media is authentic\n';
+        resultMsg += '✓ No tampering detected\n';
+        resultMsg += '✓ Signature verified\n\n';
+        if (mediaType === 'video') {
+          resultMsg += `Frames checked: ${j.frames_checked}\n`;
+        }
+        resultMsg += `Signature: ${j.extracted_signature?.substring(0, 32) || 'N/A'}...`;
+        showResult('ver_result', resultMsg, 'success');
+      } else {
+        resultMsg = `❌ ${mediaType.toUpperCase()} VERIFICATION FAILED\n\n`;
+        resultMsg += 'The watermark could not be verified.\n\n';
+        resultMsg += 'Possible reasons:\n';
+        resultMsg += '• Wrong public key provided\n';
+        resultMsg += `• ${mediaType.charAt(0).toUpperCase() + mediaType.slice(1)} has been tampered with\n`;
+        resultMsg += '• Wrong original media uploaded\n';
+        resultMsg += '• Watermark corrupted or missing\n\n';
+        if (mediaType === 'video') {
+          resultMsg += `Frames processed: ${j.frames_checked || 0}\n`;
+        }
+        resultMsg += `Extracted: ${j.extracted_signature?.substring(0, 32) || 'N/A'}...`;
+        showResult('ver_result', resultMsg, 'error');
+      }
+    } else {
+      showResult('ver_result', '❌ Error: ' + JSON.stringify(j, null, 2), 'error');
+    }
+  } catch (e) {
+    showResult('ver_result', '❌ Network error: ' + e.message, 'error');
+  } finally {
+    setButtonLoading('ver_submit', false);
+  }
+}
+
+// Deepfake Detection
+document.getElementById('detect_submit').onclick = async () => {
+  try {
+    const mediaType = document.getElementById('detectMediaType').value;
+    const fileInput = document.getElementById('detect_file');
+    const f = fileInput.files[0];
+
+    if (!f) {
+      showResult('detect_result', `⚠️ Please select a ${mediaType} file first`, 'error');
+      return;
+    }
+    
+    const btn = document.getElementById('detect_submit');
+    btn.dataset.originalText = 'Detect Deepfake';
+    setButtonLoading('detect_submit', true);
+    
+    // Hide previous heatmap
+    const heatmapDisplay = document.getElementById('heatmap_display');
+    if (heatmapDisplay) {
+      heatmapDisplay.style.display = 'none';
+    }
+    
+    // Show loading message
+    showResult('detect_result', '⏳ Analyzing with Cloud AI (Sightengine)...', 'info');
+    
+    const form = new FormData();
+    form.append('file', f);
+
+    let endpoint;
+    if (mediaType === 'image') {
+      endpoint = '/detect/image';
+    } else {
+      endpoint = '/detect/video';
+      const framesToCheck = document.getElementById('detectFramesToCheck');
+      if (framesToCheck) {
+        form.append('frames_to_check', framesToCheck.value || 10);
+      }
+    }
+
+    const r = await fetch(endpoint, { method: 'POST', body: form });
+    const j = await r.json();
+
+    if (r.ok) {
+      let resultMsg = '';
+      const probability = j.probability_percentage || 0;
+      const isFake = j.is_fake || false;
+      const method = j.method || 'unknown';
+      const provider = j.provider || 'Unknown';
+      
+      if (isFake) {
+        resultMsg = `🚨 DEEPFAKE DETECTED!\n\n`;
+        resultMsg += `⚠️ This ${mediaType} appears to be AI-generated or manipulated.\n\n`;
+        resultMsg += `📊 Fake Probability: ${probability}%\n`;
+        resultMsg += `🔴 Confidence Level: ${probability >= 70 ? 'HIGH' : probability >= 50 ? 'MEDIUM' : 'LOW'}\n`;
+        resultMsg += `🔬 Method: ${method}\n`;
+        resultMsg += `🌐 Provider: ${provider}\n\n`;
+        
+        if (j.warning) {
+          resultMsg += `⚠️ Warning: ${j.warning}\n\n`;
+        }
+        
+        if (mediaType === 'video' && j.frames_analyzed) {
+          resultMsg += `🎞️ Frames Analyzed: ${j.frames_analyzed}\n`;
+        }
+        
+        // Show heatmap if available
+        if (j.heatmap_overlay_base64) {
+          const heatmapImg = document.getElementById('heatmap_image');
+          if (heatmapImg) {
+            heatmapImg.src = 'data:image/png;base64,' + j.heatmap_overlay_base64;
+            const heatmapDisplay = document.getElementById('heatmap_display');
+            if (heatmapDisplay) {
+              heatmapDisplay.style.display = 'block';
+            }
+          }
+        }
+        
+        showResult('detect_result', resultMsg, 'error');
+      } else {
+        resultMsg = `✅ AUTHENTIC ${mediaType.toUpperCase()}\n\n`;
+        resultMsg += `✓ This ${mediaType} appears to be genuine.\n\n`;
+        resultMsg += `📊 Fake Probability: ${probability}%\n`;
+        resultMsg += `🟢 Confidence Level: ${probability <= 30 ? 'HIGH' : probability <= 50 ? 'MEDIUM' : 'LOW'}\n`;
+        resultMsg += `🔬 Method: ${method}\n`;
+        resultMsg += `🌐 Provider: ${provider}\n\n`;
+        
+        if (j.warning) {
+          resultMsg += `⚠️ Warning: ${j.warning}\n\n`;
+        }
+        
+        if (mediaType === 'video' && j.frames_analyzed) {
+          resultMsg += `🎞️ Frames Analyzed: ${j.frames_analyzed}\n`;
+        }
+        
+        // Show heatmap if available
+        if (j.heatmap_overlay_base64 && probability > 10) {
+          const heatmapImg = document.getElementById('heatmap_image');
+          if (heatmapImg) {
+            heatmapImg.src = 'data:image/png;base64,' + j.heatmap_overlay_base64;
+            const heatmapDisplay = document.getElementById('heatmap_display');
+            if (heatmapDisplay) {
+              heatmapDisplay.style.display = 'block';
+            }
+          }
+        }
+        
+        showResult('detect_result', resultMsg, 'success');
+      }
+    } else {
+      const errorMsg = j.error || j.message || JSON.stringify(j);
+      showResult('detect_result', `❌ Error: ${errorMsg}`, 'error');
+    }
+  } catch (e) {
+    showResult('detect_result', `❌ Error: ${e.message}`, 'error');
+  } finally {
+    setButtonLoading('detect_submit', false);
+  }
+};
+
+// Enhanced drag and drop
+['wm_file', 'ver_file', 'original_file', 'detect_file'].forEach(id => {
+  const input = document.getElementById(id);
+  if (!input) return;
+  const parent = input.parentElement;
+  if (!parent) return;
+  
+  ['dragenter', 'dragover'].forEach(event => {
+    parent.addEventListener(event, (e) => {
+      e.preventDefault();
+      input.style.borderColor = 'var(--primary)';
+      input.style.background = 'rgba(99, 102, 241, 0.2)';
+      input.style.transform = 'scale(1.02)';
+    });
+  });
+  
+  ['dragleave', 'drop'].forEach(event => {
+    parent.addEventListener(event, () => {
+      input.style.borderColor = 'rgba(99, 102, 241, 0.5)';
+      input.style.background = 'rgba(15, 23, 42, 0.5)';
+      input.style.transform = 'scale(1)';
+    });
+  });
+});
+
+// Initialize selects on load
+try {
+  toggleMediaOptions();
+  toggleVerifyOptions();
+  toggleDetectOptions();
+} catch (e) { /* ignore if not yet present */ }
+</script>
+</body>
+</html>

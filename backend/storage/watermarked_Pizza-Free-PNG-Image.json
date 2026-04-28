@@ -1,0 +1,13 @@
+{
+  "original_filename": "Pizza-Free-PNG-Image.png",
+  "original_hash_sha256": "118ca7c912e20c9101cde29e2a1d1a84c3adadee3d02ef050c4f661085996b06",
+  "public_key_hex": "f2310216b77814101cd4fb1c5ef6c5e2b1c8bfe0687e4a255c54611a07e9b413",
+  "private_key_hex": "4e1504289435fb0169a610361c37eb292e48caa0e8a8a9b1742c5213dcac75cf",
+  "signature_hex": "30eca947377ff211e13d7b2a600052b395e44e3c8f0b81658bb3265887bb73bae230069bf1a2bebdb5d81e53d3104f888b3da1593a76c06b1986c29fc5e2160d",
+  "watermarked_filename": "watermarked_Pizza-Free-PNG-Image.png",
+  "watermark_params": {
+    "max_bits": 512,
+    "quant": 64.0,
+    "seed": 42
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "original_filename": "cat.jpg",
+  "original_hash_sha256": "67cfe2454adfa7c3fad5143ade107ec0ca2c42e8cb00f384b1b0e3a9adc8950b",
+  "public_key_hex": "c541997aba6ec8a9bbd72dec6dda449f2f83fb57006af86590c58be24753f308",
+  "private_key_hex": "b0c3e58dd0e3875a3ef64689e4b3f0d1877d682ca7bdb3ac4544cb48cc801756",
+  "signature_hex": "c9006851569e3c4a5448cfbbc9ecce241dc847dfbdb180b21f966aa9c17fa034a6d67bd24efb8b5e2bf956eb06c0303945f92bed70a9ce2b71deee8d3688250d",
+  "watermarked_filename": "watermarked_cat.png",
+  "watermark_params": {
+    "max_bits": 512,
+    "quant": 64.0,
+    "seed": 42
+  }
+}

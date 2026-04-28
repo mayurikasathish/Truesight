@@ -1,0 +1,1 @@
+{"is_fake": false, "fake_probability": 0.33100989371513484, "confidence": 0.33100989371513484, "method": "local_heuristic", "provider": "Local (Fallback)", "api_success": false, "warning": "Using local fallback - accuracy ~60%. API unavailable.", "processing_time": 2.336968183517456, "from_cache": false, "suspicious_regions": [], "faces_detected": 0}

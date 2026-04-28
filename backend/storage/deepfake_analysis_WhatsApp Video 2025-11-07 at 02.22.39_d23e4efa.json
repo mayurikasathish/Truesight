@@ -1,0 +1,69 @@
+{
+  "filename": "WhatsApp Video 2025-11-07 at 02.22.39_d23e4efa.mp4",
+  "is_fake": true,
+  "fake_probability": 0.9852,
+  "overall_confidence": 0.978,
+  "frames_analyzed": 10,
+  "frame_results": [
+    {
+      "frame_number": 0,
+      "fake_probability": 0.99,
+      "is_fake": true,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 26,
+      "fake_probability": 0.99,
+      "is_fake": true,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 53,
+      "fake_probability": 0.99,
+      "is_fake": true,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 79,
+      "fake_probability": 0.99,
+      "is_fake": true,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 106,
+      "fake_probability": 0.99,
+      "is_fake": true,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 132,
+      "fake_probability": 0.99,
+      "is_fake": true,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 159,
+      "fake_probability": 0.99,
+      "is_fake": true,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 185,
+      "fake_probability": 0.99,
+      "is_fake": true,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 212,
+      "fake_probability": 0.99,
+      "is_fake": true,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 239,
+      "fake_probability": 0.87,
+      "is_fake": true,
+      "method": "sightengine_api"
+    }
+  ]
+}

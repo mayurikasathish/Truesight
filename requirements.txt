@@ -1,0 +1,54 @@
+# requirements.txt
+# Core Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Image Processing
+opencv-python==4.8.1.78
+numpy==1.24.3
+Pillow==10.1.0
+
+# Watermarking
+PyWavelets==1.4.1
+
+# Cryptography
+PyNaCl==1.5.0
+
+# Video Processing
+ffmpeg-python==0.2.0
+
+# Deepfake Detection
+# Note: TensorFlow and PyTorch are optional - lightweight detection works without them
+# tensorflow>=2.10.0  # Uncomment if using TensorFlow-based models
+# torch>=1.12.0  # Uncomment if using PyTorch-based models
+# torchvision>=0.13.0  # Uncomment if using PyTorch-based models
+
+# Optional: Database (if you add PostgreSQL)
+# psycopg2-binary==2.9.9
+# sqlalchemy==2.0.23
+
+# Optional: Testing
+# pytest==7.4.3
+# pytest-asyncio==0.21.1
+
+# Optional: Rate Limiting
+# slowapi==0.1.9
+
+# Existing requirements
+fastapi>=0.68.0
+uvicorn>=0.15.0
+python-multipart>=0.0.5
+opencv-python>=4.5.0
+numpy>=1.21.0
+Pillow>=8.3.0
+pywavelets>=1.1.1
+ffmpeg-python>=0.2.0
+pynacl>=1.4.0
+torch>=1.9.0
+torchvision>=0.10.0
+
+# NEW: Hugging Face dependencies
+transformers>=4.30.0
+accelerate>=0.20.0
+huggingface-hub>=0.16.0

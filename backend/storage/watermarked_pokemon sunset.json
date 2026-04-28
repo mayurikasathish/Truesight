@@ -1,0 +1,13 @@
+{
+  "original_filename": "pokemon sunset.png",
+  "original_hash_sha256": "a9b862d400eaf422e75155e07cfb4d6dc97aab2379c7d0ed81d32f97bb192d8e",
+  "public_key_hex": "f01c59f99313cf797c4dd7b75a4170b683dd0c034a66ae1c50778502061fbc88",
+  "private_key_hex": "a27b5c177326c41dfb3313ca07fc31549aab15a9bbf82af0bd21b2765222ec74",
+  "signature_hex": "c55aaafc7288a0f40605a76db5a1b2a1fc73935d101f2bcdedf003728cefe7adfbaaa8d48d648682dc456b96fdc3f78c817587b2b0a91669e7020968c2c13e09",
+  "watermarked_filename": "watermarked_pokemon sunset.png",
+  "watermark_params": {
+    "max_bits": 512,
+    "quant": 64.0,
+    "seed": 42
+  }
+}

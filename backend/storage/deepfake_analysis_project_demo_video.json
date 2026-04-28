@@ -1,0 +1,69 @@
+{
+  "filename": "project_demo_video.mp4",
+  "is_fake": false,
+  "fake_probability": 0.0504,
+  "overall_confidence": 0.036,
+  "frames_analyzed": 10,
+  "frame_results": [
+    {
+      "frame_number": 0,
+      "fake_probability": 0.03,
+      "is_fake": false,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 69,
+      "fake_probability": 0.05,
+      "is_fake": false,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 139,
+      "fake_probability": 0.05,
+      "is_fake": false,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 209,
+      "fake_probability": 0.04,
+      "is_fake": false,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 279,
+      "fake_probability": 0.03,
+      "is_fake": false,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 348,
+      "fake_probability": 0.02,
+      "is_fake": false,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 418,
+      "fake_probability": 0.06,
+      "is_fake": false,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 488,
+      "fake_probability": 0.03,
+      "is_fake": false,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 558,
+      "fake_probability": 0.02,
+      "is_fake": false,
+      "method": "sightengine_api"
+    },
+    {
+      "frame_number": 628,
+      "fake_probability": 0.03,
+      "is_fake": false,
+      "method": "sightengine_api"
+    }
+  ]
+}

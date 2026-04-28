@@ -1,0 +1,89 @@
+{
+  "filename": "watermarked_Dramatic Look.mp4",
+  "is_fake": false,
+  "fake_probability": 0.027544249688727825,
+  "overall_confidence": 0.023305582867275767,
+  "frames_analyzed": 10,
+  "frame_results": [
+    {
+      "frame_number": 0,
+      "fake_probability": 0.030370027569695864,
+      "is_fake": false,
+      "suspicious_regions_count": 0,
+      "faces_detected": 0,
+      "processing_time": 0.1
+    },
+    {
+      "frame_number": 14,
+      "fake_probability": 0.026204462909162198,
+      "is_fake": false,
+      "suspicious_regions_count": 0,
+      "faces_detected": 0,
+      "processing_time": 0.1
+    },
+    {
+      "frame_number": 29,
+      "fake_probability": 0.027228434391013415,
+      "is_fake": false,
+      "suspicious_regions_count": 0,
+      "faces_detected": 0,
+      "processing_time": 0.1
+    },
+    {
+      "frame_number": 44,
+      "fake_probability": 0.02690374571004034,
+      "is_fake": false,
+      "suspicious_regions_count": 0,
+      "faces_detected": 0,
+      "processing_time": 0.1
+    },
+    {
+      "frame_number": 59,
+      "fake_probability": 0.0252094226839287,
+      "is_fake": false,
+      "suspicious_regions_count": 0,
+      "faces_detected": 0,
+      "processing_time": 0.1
+    },
+    {
+      "frame_number": 73,
+      "fake_probability": 0.024178216344751924,
+      "is_fake": false,
+      "suspicious_regions_count": 0,
+      "faces_detected": 0,
+      "processing_time": 0.1
+    },
+    {
+      "frame_number": 88,
+      "fake_probability": 0.024191744668224352,
+      "is_fake": false,
+      "suspicious_regions_count": 0,
+      "faces_detected": 0,
+      "processing_time": 0.1
+    },
+    {
+      "frame_number": 103,
+      "fake_probability": 0.024347042050470776,
+      "is_fake": false,
+      "suspicious_regions_count": 0,
+      "faces_detected": 0,
+      "processing_time": 0.1
+    },
+    {
+      "frame_number": 118,
+      "fake_probability": 0.02442273234547011,
+      "is_fake": false,
+      "suspicious_regions_count": 0,
+      "faces_detected": 0,
+      "processing_time": 0.1
+    },
+    {
+      "frame_number": 133,
+      "fake_probability": 0.0,
+      "is_fake": false,
+      "suspicious_regions_count": 0,
+      "faces_detected": 0,
+      "processing_time": 0.1
+    }
+  ]
+}

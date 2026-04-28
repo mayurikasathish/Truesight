@@ -1,0 +1,9 @@
+{
+  "filename": "girl.png",
+  "is_fake": true,
+  "fake_probability": 0.98,
+  "method": "sightengine_api",
+  "provider": "Sightengine",
+  "from_cache": true,
+  "processing_time": 0.02988600730895996
+}

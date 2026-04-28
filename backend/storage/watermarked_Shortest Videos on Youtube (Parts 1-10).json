@@ -1,0 +1,12 @@
+{
+  "original_filename": "Shortest Videos on Youtube (Parts 1-10).mp4",
+  "public_key_hex": "3a0654b9ef461046ab2528158306f0865f078b15ea5e7a948628cf886ceb7424",
+  "signature_hex": "a75e1d45e637c53dc0f9560860bc70e4eb1317e8910e11a352ea00b49e816b96481adc36d14d584537d9a7a31843e7154e2c5033260d0daa4cefb64e91ebf70c",
+  "watermarked_filename": "watermarked_Shortest Videos on Youtube (Parts 1-10).mp4",
+  "watermark_params": {
+    "max_bits": 512,
+    "quant": 64.0,
+    "seed": 42,
+    "frame_stride": 10
+  }
+}

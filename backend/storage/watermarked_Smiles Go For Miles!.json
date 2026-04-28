@@ -1,0 +1,13 @@
+{
+  "original_filename": "Smiles Go For Miles!.jpg",
+  "original_hash_sha256": "ee5fd3c08e018d54171be8e7399cef4f5d8ac283992ad13fa69ee5c8a8316e60",
+  "public_key_hex": "8ec3713be07f059fec66f21a0bab1aa31f3f4d0d8c6e527b7b527c83a7804be0",
+  "private_key_hex": "c2a8e613b05156637a81bb20da3dbfa5753d0b6ccd4dbe07acc0739c8f39dadc",
+  "signature_hex": "54a281326c8f02e4ceead2a6c81198dc982ad69678f811fb21f49babb05c4bb0e247acec2332b0cceac6ceebd86cbd5b0d641d5f9a4e4021d775b692b08c5901",
+  "watermarked_filename": "watermarked_Smiles Go For Miles!.png",
+  "watermark_params": {
+    "max_bits": 512,
+    "quant": 64.0,
+    "seed": 42
+  }
+}
